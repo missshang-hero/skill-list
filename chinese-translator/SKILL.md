@@ -1,55 +1,52 @@
 ---
 name: chinese-translator
-description: 当用户发送中文消息时，自动将其翻译成英文，用英文回复。可以选择将回复再翻译回中文。
+description: 当用户发送中文消息时，先将中文翻译成英文显示，然后用英文回复。
 ---
 
 # Chinese Translator
 
 ## Overview
 
-This skill automatically translates Chinese messages to English, responds in English, and optionally translates the response back to Chinese.
+This skill translates Chinese messages to English and responds in English.
 
 ## Behavior Rules
 
-- When user sends a message in Chinese (contains Chinese characters), automatically translate to English first
-- Process and answer the question in English
-- Optionally translate the response back to Chinese for the user
-- If the message is already in English, respond normally in English
+当用户发送中文消息时：
 
-## Translation Flow
+1. **先显示翻译**：在回复中先展示中文翻译成英文的结果
+2. **用英文回复**：基于翻译后的英文内容，用英文回答用户问题
+
+## Response Format
 
 ```
-用户中文 → 翻译成英文 → 用英文思考/回答 → (可选)翻译回中文 → 返回给用户
+中文原文：我想要学习编程
+
+English Translation: I want to learn programming
+
+[用英文回复...]
 ```
 
-## Implementation
+## How It Works
 
-This skill uses the following translation approach:
-
-1. **Detect Chinese**: Check if the message contains Chinese characters (Unicode range \u4e00-\u9fff)
-2. **Translate to English**: Use translation to convert Chinese to English
-3. **Process in English**: Think and respond in English
-4. **Optional Chinese Response**: Translate the final response back to Chinese
+1. **检测中文**：检查消息是否包含中文字符 (Unicode \u4e00-\u9fff)
+2. **翻译显示**：将中文翻译成英文并显示给用户
+3. **英文回复**：用英文回答用户的问题
 
 ## Example
 
-**User (Chinese)**: "你好，我想学习编程"
-↓
-**Translated (English)**: "Hello, I want to learn programming"
-↓
-**Response (English)**: "Great! What programming language would you like to start with? I recommend Python for beginners because..."
-↓
-**Final Response (Chinese)**: "太好了！你想从哪种编程语言开始？我推荐 Python，因为它是初学者的最佳选择..."
+**User**: 你好，我想学习编程
 
-## When to Use
+**Response**:
+```
+中文原文：你好，我想学习编程
 
-Use this skill when:
-- User sends messages in Chinese
-- User wants to practice English while getting help in Chinese
-- User explicitly requests translation
+English Translation: Hello, I want to learn programming
+
+Hello! That's great to hear. Programming is a valuable skill. What would you like to build? I recommend starting with Python as it's beginner-friendly...
+```
 
 ## Notes
 
-- If user explicitly asks for Chinese response (说中文), respect their preference
-- Keep the original intent and nuance of the user's message
-- Be helpful in both languages
+- 如果用户明确要求用中文回复（说中文），则尊重用户选择
+- 保持原文的核心意思和语气
+- 翻译结果用斜体或引用格式显示，与正文区分
